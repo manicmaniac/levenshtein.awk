@@ -1,3 +1,6 @@
 [submodule "vendors/assert.awk"]
 	path = vendors/assert.awk
 	url = https://github.com/manicmaniac/assert.awk
+[submodule "vendors/shunit2"]
+	path = vendors/shunit2
+	url = https://github.com/zandev/shunit2

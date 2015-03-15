@@ -1,0 +1,99 @@
+#!/bin/sh
+# @(#)levenshtein - CLI tool to measure the difference between 2 words.
+
+set -e
+set -u
+cd "$(dirname "$0")"
+
+doc='levenshtein - CLI tool to measure the difference between 2 words.
+
+Usage:
+    levenshtein [-h | --help]
+    levenshtein [-v | --version]
+    levenshtein [--] <text> [text2]
+    levenshtein [-n | --nearest] [--] <text>
+
+Options:
+    -h --help  show this screen and exit
+    -v --version  show version and exit
+    -n --nearest  output the nearest word
+
+Examples:
+    levenshtein -n "foo" < words.txt
+    # => outputs the nearest word to "foo" in "words.txt"
+
+    levenshtein "foo" "bar"
+    # => outputs the distance between "foo" and "bar"
+'
+version='0.1.0'
+
+levenshtein_awk='../levenshtein.awk'
+
+
+nearest_to_stdin() {
+    code="$(echo '/./ { print levenshtein_distance(s, $0) " " $0 }' | cat "$levenshtein_awk" -)"
+    cat /dev/stdin | awk -vs="$1" "$code" | sort -n | head -n 1 | cut -d\  -f2-
+}
+
+nearest_to() {
+    echo "$1" | nearest_to_stdin "$2"
+}
+
+compare_to_stdin() {
+    code="$(echo '/./ { print levenshtein_distance(s, $0) }' | cat "$levenshtein_awk" -)"
+    cat /dev/stdin | awk -vs="$1" "$code"
+}
+
+compare_to() {
+    echo "$1" | compare_to_stdin "$2"
+}
+
+# parse arguments
+option_nearest=0
+
+while [ $# -gt 0 ]
+do
+    case "$1" in
+        --)
+            shift
+            break
+            ;;
+        -h | --help)
+            echo "$doc"
+            exit
+            ;;
+        -v | --version)
+            echo "$version"
+            exit
+            ;;
+        -n | --nearest)
+            option_nearest=1
+            shift
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+case $# in
+    1)
+        if [ $option_nearest -eq 1 ]; then
+            nearest_to_stdin "$1"
+        else
+            compare_to_stdin "$1"
+        fi
+        ;;
+    2)
+        if [ $option_nearest -eq 1 ]; then
+            nearest_to "$1" "$2"
+        else
+            compare_to "$1" "$2"
+        fi
+        ;;
+    *)
+        echo "error: wrong number of arguments. expected 1 or 2 but got $#." >&2
+        exit 1
+        ;;
+esac
+
