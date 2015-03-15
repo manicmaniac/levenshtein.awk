@@ -32,7 +32,7 @@ levenshtein_awk='../levenshtein.awk'
 
 nearest_to_stdin() {
     code="$(echo '/./ { print levenshtein_distance(s, $0) " " $0 }' | cat "$levenshtein_awk" -)"
-    cat /dev/stdin | awk -vs="$1" "$code" | sort -n | head -n 1 | cut -d\  -f2-
+    awk -vs="$1" "$code" < /dev/stdin | sort -n | head -n 1 | cut -d\  -f2-
 }
 
 nearest_to() {
@@ -41,7 +41,7 @@ nearest_to() {
 
 compare_to_stdin() {
     code="$(echo '/./ { print levenshtein_distance(s, $0) }' | cat "$levenshtein_awk" -)"
-    cat /dev/stdin | awk -vs="$1" "$code"
+    awk -vs="$1" "$code" < /dev/stdin
 }
 
 compare_to() {
