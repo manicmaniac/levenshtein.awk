@@ -1,0 +1,3 @@
+[submodule "vendors/assert.awk"]
+	path = vendors/assert.awk
+	url = https://github.com/manicmaniac/assert.awk
