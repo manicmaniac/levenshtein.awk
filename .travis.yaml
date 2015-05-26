@@ -1,4 +1,4 @@
 language: ruby
 script:
-    - ./tests/test-runner.sh
+    - /usr/bin/env sh ./tests/test-runner.sh
 
