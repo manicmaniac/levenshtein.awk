@@ -1,5 +1,7 @@
 # levenshtein.awk
 
+[![Build Status](https://travis-ci.org/manicmaniac/levenshtein.awk.svg)](https://travis-ci.org/manicmaniac/levenshtein.awk)
+
 An Awk library to measure the difference between 2 words.
 
 ## Compatibility
