@@ -1,4 +1,5 @@
-language: ruby
+language: c
+install:
+    - ./configure
 script:
-    - /usr/bin/env sh ./tests/test-runner.sh
-
+    - make check
