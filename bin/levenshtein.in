@@ -25,14 +25,14 @@ Examples:
     levenshtein "foo" "bar"
     # => outputs the distance between "foo" and "bar"
 '
-version='0.1.0'
+version='@VERSION@'
 
-levenshtein_awk='../levenshtein.awk'
+levenshtein_awk='../share/levenshtein.awk'
 
 
 nearest_to_stdin() {
     code="$(echo '/./ { print levenshtein_distance(s, $0) " " $0 }' | cat "$levenshtein_awk" -)"
-    awk -v s="$1" "$code" < /dev/stdin | sort -n | head -n 1 | cut -d\  -f2-
+    @AWK@ -v s="$1" "$code" < /dev/stdin | sort -n | head -n 1 | cut -d\  -f2-
 }
 
 nearest_to() {
@@ -41,7 +41,7 @@ nearest_to() {
 
 compare_to_stdin() {
     code="$(echo '/./ { print levenshtein_distance(s, $0) }' | cat "$levenshtein_awk" -)"
-    awk -v s="$1" "$code" < /dev/stdin
+    @AWK@ -v s="$1" "$code" < /dev/stdin
 }
 
 compare_to() {

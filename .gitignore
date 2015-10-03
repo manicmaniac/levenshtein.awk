@@ -1,0 +1,19 @@
+# http://www.gnu.org/software/automake
+
+Makefile
+Makefile.in
+
+# http://www.gnu.org/software/autoconf
+
+/autom4te.cache
+/aclocal.m4
+/build-aux/
+/configure
+/stamp-h1
+/config.status
+/config.log
+tests/*.log
+tests/*.trs
+
+/bin/levenshtein
+/share/levenshtein.awk

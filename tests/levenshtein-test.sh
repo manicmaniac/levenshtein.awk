@@ -4,7 +4,12 @@ cd "$(dirname "$0")"
 
 setUp() {
     levenshtein="../bin/levenshtein"
+    chmod +x "$levenshtein"
     words_txt="./words.txt"
+}
+
+tearDown() {
+    chmod -x "$levenshtein"
 }
 
 test_levenshtein() {
