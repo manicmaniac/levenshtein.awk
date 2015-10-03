@@ -4,7 +4,7 @@ set -e
 cd "$(dirname "$0")"
 
 assert_awk='../vendors/assert.awk/assert.awk'
-levenshtein_awk='../levenshtein.awk'
+levenshtein_awk='../share/levenshtein.awk'
 levenshtein_test_awk='./levenshtein-test.awk'
 levenshtein_test_sh='./levenshtein-test.sh'
 
