@@ -12,8 +12,12 @@ function levenshtein_distance(str1, str2,    len1, len2, chars1, chars2, i, j, m
     if (len1 == 0) return len2
     if (len2 == 0) return len1
     if (str1 == str2) return 0
-    split(str1, chars1, "")
-    split(str2, chars2, "")
+    for(i = 1; i <= len1; i++) {
+        chars1[i] = substr(str1, i, 1)
+    }
+	for(j = 1; j <= len2; j++) {
+        chars2[j] = substr(str2, j, 1)
+    }
     for (i = 0; i <= len1; i++) {
         matrix[i, 0] = i
     }
